@@ -1,5 +1,6 @@
 import sys
 import Ice
+import IceStorm
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet
 
@@ -19,26 +20,27 @@ class ReceiverFactoryI(Trawlnet.ReceiverFactory):
         def create(string fileName, Sender* sender Transfer* transfer):
                 servant=ReceiverI()
                 proxy=current.adpter.addwithUUID(servant)
-
+                
                 return Trawlnet.ReceiverPrx.checkedCast(proxy)
+        
 class Client(Ice.Application):
         def run(self,argv):
-                prx='ReceiverManager.Proxy'
-                proxy=self.comunicator().propertyToProxy(prx)
+                prxT="Transfer72 -t -e 1.1 @ AdapterTransfer72"
+        
+                proxy=self.comunicator().stringToProxy(prxT)
                 transfer_factory=TrawlNet.TransferFactoryPrx.checkedCast(proxy)
 
                 if transfer_factory is None:
-                        raise RunTimeError("Ivalid Proxy")
+                        raise RunTimeError("Ivalid proxy of transfer_factory")
                 if len(argv) < 2:
                         raise RunTimeError("No file given")
 
+                ic = self.communicator()
+                servant=ReceiverFactoryI()
+                adapter=ic.createObjectAdapter("AdapterFactoryReceiver")
+                proxyReceiver=adapter.add(servant,ic.stringToIdentify("Factory_receiver")
 
-                broker = self.communicator()
-                servant=ReceiverFactory()
-                adapter=broker.createObjectAdapter("ReceiverFactoryAdapter")
-                prx2=adapter.add(servant,broker.stringToIdentify("receiver_factory1")
-
-                transfer=transfer_factory.newTransfer(TrawlNet.ReceiverFactoryPrx.checkedCast(prx2))
+                transfer=transfer_factory.newTransfer(TrawlNet.ReceiverFactoryPrx.checkedCast(proxyReceiver))
                 fileList=list(sys.argv[1:])
                 transfer.createPeers(fileList)
 

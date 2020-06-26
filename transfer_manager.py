@@ -7,25 +7,39 @@ import Trawlnet
 
 class TransferI(TrawlNet.Transfer):
     prxR="ReceiverFactory.Proxy"
-    prxS="SenderFactory.Proxy"
-    def crearePeers(self, files, current=None):
+    def __init__(self, sender_factory, receiver_factory):
+        self.sender_factory=sender_factory
+        self.receiver_factory=receiver_factory
+        
+        
+    def createPeers(self, files, current=None):
+       
         for f in files:
             if not os.path.isfile(os.path.join(os.getcwd(),f)):
-                #cerrar todo y parar ya que uno no existe
+                raise RuntimeError("Algun archivo no existe")
                 
         #si sigue la ejecucion
         for fi in files:
-            proxyS = self.communicator().propertyToProxy(prxS)
-            sender_factory=Trawnet.SenderFactoryPrx.checkedCast(proxyS)
-            sender= sender_factory.create(fi)
+           file_sender=self.sender_factory.create(fi)
+           file_receiver=self.receiver_factory.create(file, sender)
 
-            proxyR = self.communicator().propertyToProxy(prxR)
-            receiver_factory=Trawnet.ReceiverFactoryPrx.checkedCast(proxyR)
-            receiver= receiver_factory.create(fi,sender, transfer)
+    def destroy(self,current=None):
+        try:
+            current.adapter.remove(current.id)
+        except Exception as e:
+            print(e,flush=true)
+
+    def destroyPeer(self, idP, current=None):
+        proxy=idP+" -t -e 1.1 @ AdapterReceiver72"
+        file_receiver = Trawlnet.ReceiverPrx.checkedCast(proxy)
+        file_receiver.destroy()
 
 class TransferFactoryI(TrawlNet.TransferFactory):
-    def newTransfer(self,receiverFactory, current=None):
-        servant=TransferI()
+    def __init__(self, sender_factory):
+        self.sender_factory=sender_factory
+        
+    def newTransfer(self,receiver_factory, current=None):
+        servant=TransferI(self.sender_factory, receiver_factory)
         proxy=current.adapter.addwithUUid(servant)
 
         return TrawlNet.TransferPrx.checkedCast(proxy)
@@ -33,4 +47,24 @@ class TransferFactoryI(TrawlNet.TransferFactory):
 class TranferManager(Ice.Application):
     def run(self, argv):
         
-s
+        prxS="Sender72 -t -e 1.1 @ AdapterSender72"
+        proxy=self.comunicator().stringToProxy(prxS)
+        sender_factory=TrawlNet.TransferFactoryPrx.checkedCast(proxy)
+        
+        if sender_factory is None:
+            raise RunTimeError("Ivalid proxy of sender_factory")
+
+        ic = self.communicator()
+        servant=TransferFactoryI(sender_factory)
+        adapter=ic.createObjectAdapter("AdapterFactoryTransfer")
+        proxyTransfer=adapter.add(servant,ic.stringToIdentify("Transfer72")
+   
+        print(proxy, flush=True)
+        
+        adapter.activate()
+        self.shutdownOnInterrupt()
+        broker.waitForShutdown()
+
+        return 0
+    
+sys.exit(TranferManager().main(sys.argv))
