@@ -22,11 +22,12 @@ class ReceiverI(TrawlNet.Receiver):
                 bloque=self.sender.receive(2048)
                 bl=binascii.a2b_base64(bloque[1:])
                 bl=bl.decode()
-                print(bl)
+                #print(bl)
                 file_ = open(file_path, 'w')
                 file_.write(bl)
                 
                 self.sender.close()
+                print("Termino de recibir el archivo {0}".format(self.fileName))
                 
                 
                 

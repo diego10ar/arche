@@ -11,7 +11,7 @@ import binascii
 class SenderI(TrawlNet.Sender):
     def __init__(self, fileName):
         self.fileName=fileName
-        print("Sender Created, file: {0}".format(fileName))
+        #print("Creo Sender para el archivo: {0}".format(fileName))
         
         file_path=os.getcwd()+"/files/"+self.fileName
         self.file_ = open(file_path, 'rb')
@@ -23,6 +23,7 @@ class SenderI(TrawlNet.Sender):
         
     def close(self, current):
         self.file_.close()
+        print("Archivo {0} recibido".format(os.path.basename(self.file_.name)))
         
     def destroy(self, current):
         try:

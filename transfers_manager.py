@@ -19,7 +19,7 @@ class TransferI(TrawlNet.Transfer):
         
         for f in files:
             ruta=os.getcwd()+"/files/"+f
-            print("ruta= {0}".format(ruta))
+            #print("ruta= {0}".format(ruta))
             if not os.path.isfile(ruta):
                 raise RuntimeError("Algun archivo no existe")
                 
@@ -30,12 +30,13 @@ class TransferI(TrawlNet.Transfer):
            file_receiver=self.receiver_factory.create(fi, file_sender, transfer)
            receivers.append(file_receiver)
 
+        print("Todas las parejas creadas")
         return receivers
     
     def destroy(self,current=None):
         try:
             current.adapter.remove(current.id)
-            print("Todo Eliminado")
+            print("TRANSFER DESTROYED")
         except Exception as e:
             print(e,flush=True)
 
