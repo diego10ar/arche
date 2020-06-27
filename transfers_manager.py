@@ -15,15 +15,19 @@ class TransferI(TrawlNet.Transfer):
         
         
     def createPeers(self, files, current=None):
+        transfer=None
+        
         for f in files:
-            if not os.path.isfile(os.path.join(os.getcwd(),f)):
+            ruta=os.getcwd()+"/files/"+f
+            print("ruta= {0}".format(ruta))
+            if not os.path.isfile(ruta):
                 raise RuntimeError("Algun archivo no existe")
                 
         #si sigue la ejecucion
         receivers=[]    
         for fi in files:
            file_sender=self.sender_factory.create(fi)
-           file_receiver=self.receiver_factory.create(file, sender)
+           file_receiver=self.receiver_factory.create(fi, file_sender, transfer)
            receivers.append(file_receiver)
 
         return receivers
@@ -31,8 +35,9 @@ class TransferI(TrawlNet.Transfer):
     def destroy(self,current=None):
         try:
             current.adapter.remove(current.id)
+            print("Todo Eliminado")
         except Exception as e:
-            print(e,flush=true)
+            print(e,flush=True)
 
     def destroyPeer(self, peerId, current=None):
         proxyReceiverId=peerId+" -t -e 1.1 @ AdapterReceiver72"
@@ -45,7 +50,7 @@ class TransferFactoryI(TrawlNet.TransferFactory):
         
     def newTransfer(self,receiver_factory, current=None):
         servant=TransferI(self.sender_factory, receiver_factory)
-        proxy=current.adapter.addwithUUid(servant)
+        proxy=current.adapter.addWithUUID(servant)
         servant.transfer=TrawlNet.TransferPrx.checkedCast(proxy)
         
         return servant.transfer
@@ -53,10 +58,12 @@ class TransferFactoryI(TrawlNet.TransferFactory):
 class TranferManager(Ice.Application):
     def run(self, argv):
         
-        prxS="Sender72 -t -e 1.1 @ AdapterSender72"
+        prxS="Sender72 -t -e 1.1@ AdapterSender72"
+
         proxySender=self.communicator().stringToProxy(prxS)
-        sender_factory=TrawlNet.TransferFactoryPrx.checkedCast(proxySender)
+        sender_factory=TrawlNet.SenderFactoryPrx.checkedCast(proxySender)
         
+        #print("proxy={0}".format(proxySender))
         if sender_factory is None:
             raise RuntimeError("Ivalid proxy of sender_factory")
 

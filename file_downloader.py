@@ -6,12 +6,29 @@ import Ice
 import IceStorm
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet
-
-
+import binascii
+import os
 
 class ReceiverI(TrawlNet.Receiver):
+        def __init__(self, fileName, sender):
+                self.fileName=fileName
+                self.sender=sender
+                
         def start(self, current=None):
-                print("empiezo")
+                print("Empiezo a transferir archivo {0}".format(self.fileName))
+                size=2048
+                file_path=os.getcwd()+"/downloads/"+self.fileName
+      
+                bloque=self.sender.receive(2048)
+                bl=binascii.a2b_base64(bloque[1:])
+                bl=bl.decode()
+                print(bl)
+                file_ = open(file_path, 'w')
+                file_.write(bl)
+                
+                self.sender.close()
+                
+                
                 
         def destroy(self, current):
                 try:
@@ -21,9 +38,9 @@ class ReceiverI(TrawlNet.Receiver):
                         print(e, flush=True)
 
 class ReceiverFactoryI(TrawlNet.ReceiverFactory):
-        def create(self,fileName, sender, transfer):
-                servant=ReceiverI()
-                proxy=current.adpter.addwithUUID(servant)
+        def create(self,fileName, sender, transfer,current=None):
+                servant=ReceiverI(fileName,sender)
+                proxy=current.adapter.addWithUUID(servant)
                 
                 return TrawlNet.ReceiverPrx.checkedCast(proxy)
         
@@ -49,9 +66,11 @@ class Client(Ice.Application):
                 adapter.activate()
                                           
                 transfer=transfer_factory.newTransfer(TrawlNet.ReceiverFactoryPrx.checkedCast(proxyReceiver))
-                transfer.createPeers(fileList)
+                receivers=transfer.createPeers(fileList)
 
-                
+                for r in receivers:
+                        r.start()
+                        
                 return 0
 
 sys.exit(Client().main(sys.argv))

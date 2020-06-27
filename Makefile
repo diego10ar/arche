@@ -25,7 +25,7 @@ run-transfer-manager:
 	./transfers_manager.py --Ice.Config=transfers.config
 
 run-client: create-client-workspace
-	./file_downloader.py --Ice.Config=client.config archivo1
+	./file_downloader.py --Ice.Config=client.config file1 file2 file3
 
 create-client-workspace:
 	mkdir -p downloads/
