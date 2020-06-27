@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import sys
 import Ice
 import IceStorm
@@ -6,42 +9,46 @@ import TrawlNet
 
 
 
-class ReceiverI(Trawlnet.Receiver):
+class ReceiverI(TrawlNet.Receiver):
         def start(self, current=None):
+                print("empiezo")
                 
         def destroy(self, current):
                 try:
                         current.adapter.remove(current.id)
-                        print("Receiver Destroyed"), flush=True)
+                        print("Receiver Destroyed", flush=True)
                 except Exception as e:
                         print(e, flush=True)
 
-class ReceiverFactoryI(Trawlnet.ReceiverFactory):
-        def create(string fileName, Sender* sender Transfer* transfer):
+class ReceiverFactoryI(TrawlNet.ReceiverFactory):
+        def create(self,fileName, sender, transfer):
                 servant=ReceiverI()
                 proxy=current.adpter.addwithUUID(servant)
                 
-                return Trawlnet.ReceiverPrx.checkedCast(proxy)
+                return TrawlNet.ReceiverPrx.checkedCast(proxy)
         
 class Client(Ice.Application):
         def run(self,argv):
                 prxT="Transfer72 -t -e 1.1 @ AdapterTransfer72"
-        
-                proxy=self.comunicator().stringToProxy(prxT)
+                proxy=self.communicator().stringToProxy(prxT)
                 transfer_factory=TrawlNet.TransferFactoryPrx.checkedCast(proxy)
 
                 if transfer_factory is None:
                         raise RunTimeError("Ivalid proxy of transfer_factory")
-                if len(argv) < 2:
-                        raise RunTimeError("No file given")
 
+                fileList=list(sys.argv[1:])
+               
+                if len(fileList) < 1:
+                        print("Invalid number of arguments", flush=True)
+                        return 2
+                        
                 ic = self.communicator()
                 servant=ReceiverFactoryI()
                 adapter=ic.createObjectAdapter("AdapterFactoryReceiver")
-                proxyReceiver=adapter.add(servant,ic.stringToIdentify("Factory_receiver")
-
+                proxyReceiver=adapter.add(servant,ic.stringToIdentity("Receiver72"))
+                adapter.activate()
+                                          
                 transfer=transfer_factory.newTransfer(TrawlNet.ReceiverFactoryPrx.checkedCast(proxyReceiver))
-                fileList=list(sys.argv[1:])
                 transfer.createPeers(fileList)
 
                 
