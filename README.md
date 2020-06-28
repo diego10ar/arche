@@ -4,7 +4,6 @@ https://github.com/diego10ar/arche_SSDD.git
 
 Diego Arche Claudio
 
--En el repositorio hay una memoria en Pdf mas detallada que lo presentado a continuación.
 
 ## Que había que hacer:
 
