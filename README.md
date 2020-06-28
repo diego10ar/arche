@@ -50,3 +50,10 @@ Y por último vemos como nos notifica en el terminal de los servidores
  
  
  Si nos vamos a la carpeta **/downloads** veremos que se han obtenido bien los ficheros si estos eran correctos
+ 
+ En caso de que un archivo no exista obtendremos las siguientes excepciones por parte del cliente:
+  ![](memoria/ErrorCliente.png)
+  
+  Y en la parte del servidor obtendremos:
+  ![](memoria/ErrorServers.png)
+  
