@@ -18,15 +18,23 @@ class ReceiverI(TrawlNet.Receiver):
                 print("Empiezo a transferir archivo {0}".format(self.fileName))
                 size=2048
                 file_path=os.getcwd()+"/downloads/"+self.fileName
-      
-                bloque=self.sender.receive(2048)
-                bl=binascii.a2b_base64(bloque[1:])
-                bl=bl.decode()
-                #print(bl)
-                file_ = open(file_path, 'w')
-                file_.write(bl)
+                
+                with open(file_path,'w') as file_:
+                        while True:
+                                bloque=self.sender.receive(size)
+                                if(len(bloque)==3):
+                                        break
+                                bl=binascii.a2b_base64(bloque[1:])
+                                bl=bl.decode()
+                                #print(bl)
+                                file_.write(bl)
                 
                 self.sender.close()
+                self.sender.destroy()
+                
+
+
+                
                 print("Termino de recibir el archivo {0}".format(self.fileName))
                 
                 
@@ -34,7 +42,7 @@ class ReceiverI(TrawlNet.Receiver):
         def destroy(self, current):
                 try:
                         current.adapter.remove(current.id)
-                        print("Receiver Destroyed", flush=True)
+                        print("RECEIVER DESTROYED", flush=True)
                 except Exception as e:
                         print(e, flush=True)
 
@@ -57,7 +65,7 @@ class Client(Ice.Application):
                 fileList=list(sys.argv[1:])
                
                 if len(fileList) < 1:
-                        print("Invalid number of arguments", flush=True)
+                        print("Faltan Argumenos (Nombre de Archivo)", flush=True)
                         return 2
                         
                 ic = self.communicator()
@@ -71,7 +79,10 @@ class Client(Ice.Application):
 
                 for r in receivers:
                         r.start()
-                        
+                        r.destroy()
+
+                transfer.destroy()
+                
                 return 0
 
 sys.exit(Client().main(sys.argv))

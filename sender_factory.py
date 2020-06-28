@@ -36,7 +36,7 @@ class SenderFactoryI(TrawlNet.SenderFactory):
     def create(self, fileName, current=None):
         ruta=os.getcwd()+"/files/"+fileName
         if not os.path.isfile(ruta):
-                raise TrawlNet.FileDoesNotExistError("Error searching file: {0}".format(fileName))
+                raise TrawlNet.FileDoesNotExistError("Error al buscar archivo: {0}".format(fileName))
 
         servant=SenderI(fileName)
         proxyS=current.adapter.addWithUUID(servant)

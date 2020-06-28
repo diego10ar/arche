@@ -42,7 +42,7 @@ class TransferI(TrawlNet.Transfer):
 
     def destroyPeer(self, peerId, current=None):
         proxyReceiverId=peerId+" -t -e 1.1 @ AdapterReceiver72"
-        file_receiver = Trawlnet.ReceiverPrx.checkedCast(proxyReceiverId)
+        file_receiver = TrawlNet.ReceiverPrx.checkedCast(proxyReceiverId)
         file_receiver.destroy()
 
 class TransferFactoryI(TrawlNet.TransferFactory):
