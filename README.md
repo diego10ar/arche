@@ -6,10 +6,11 @@ Enlace del proyecto:  https://github.com/diego10ar/arche_SSDD.git
 
 Para esta práctica de Convocatoria Extraordinaria, se nos pedía la creación de un sistema cliente-servidor que permitiera la descarga de ficheros. Para ello debiamos usar ZeroC Ice con el lenguaje python teniendo en cuenta los siguientes aspectos:
 
-  -**Transparencia de localización**
-  -~~**Manejo de canales de Eventos**~~
+  - **Transparencia de localización**
 
-  -**Despliegue de servidores**
+  - ~~**Manejo de canales de Eventos**~~
+
+  - **Despliegue de servidores**
 
 
 
