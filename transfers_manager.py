@@ -19,9 +19,12 @@ class TransferI(TrawlNet.Transfer):
         
         for f in files:
             ruta=os.getcwd()+"/files/"+f
-            #print("ruta= {0}".format(ruta))
-            if not os.path.isfile(ruta):
-                raise RuntimeError("Algun archivo no existe")
+            try:
+                if not os.path.isfile(ruta):
+                #print("ruta= {0}".format(ruta))
+                    raise RuntimeError("Algun archivo no existe")
+            except Exception as e:
+                print(e,flush=True)
                 
         #si sigue la ejecucion
         receivers=[]    

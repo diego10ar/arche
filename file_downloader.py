@@ -75,12 +75,17 @@ class Client(Ice.Application):
                 adapter.activate()
                                           
                 transfer=transfer_factory.newTransfer(TrawlNet.ReceiverFactoryPrx.checkedCast(proxyReceiver))
-                receivers=transfer.createPeers(fileList)
-
-                for r in receivers:
-                        r.start()
-                        r.destroy()
-
+                try:
+                        receivers=transfer.createPeers(fileList)
+              
+                        for r in receivers:
+                                r.start()
+                                r.destroy()
+                                
+                                
+                except Exception as e:
+                        print(e,flush=True)
+                        
                 transfer.destroy()
                 
                 return 0
