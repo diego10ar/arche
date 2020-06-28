@@ -34,4 +34,4 @@ En las siguientes fotos se puede ver como se realiza la ejecucin:
 
 Primero arranco los servidores:
 
- ![alt text](https://raw.githubusercontent.com/diego10ar/arche_SSDD/master/memoria/make.png)
+ ![](memoria/make.png)
