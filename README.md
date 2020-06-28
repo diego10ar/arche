@@ -1,6 +1,7 @@
 # arche_SSDD
 
-https://github.com/diego10ar/arche_SSDD.git
+https://github.com/diego10ar/arche.git
+
 
 Diego Arche Claudio
 
