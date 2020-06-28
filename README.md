@@ -28,6 +28,17 @@ A la hora de recibir un archivo, mi metodo Start del ReceiverI, llamara la lectu
 
 No he implementado los eventos pero los archivos de configuracion para ello si estan creados ya que son similares a los de la sesion3 de Laboratorio.
 
+
+### Problemas con algunas partes del código
+En general los problemas que he ido encontrando los he podido solucionar gracias al foro y los apuntes de las sesiones de laboratorio. Se que he encontrado menos problemas debido a que no he realizado la implementación de los eventos que eso modifica parte del código.
+
+Para las conexiones no he tenido mucho problema ya que para los proxis he usado nombres comunes cambiando dependiendo de la clase y me ha ayudado mucho los ejemplos de clase para la correcta realización de estas y sobretodo para los archivos de configuración que son semejantes.
+
+Para transferir el archivo he encontrado algun problema ya que en archivos grandes hay que pedir varios bloques hasta que se recibe el archivo completo. A la hora de enviar no tuve problema al ser igual que el **_transfer_factory.py_** de la practica de ordinario pero a la hora de recibir en la funcin _start()_ del _ReceiverI()_ tuve que crear un bucle que parara cuando el tamaño del bloque recibido era igual a 3 ya que una vez ha finalizado la lectura solo envia bloques vacios de ese tamaño. 
+
+ ![](memoria/recibo.png)
+
+
 ## Manual de Usuario:
 
 A pesar de no contar con Canal de Eventos, la práctica se realiza correctamente, si hacemos el comando **_Make_** nos realizara bien el despliegue de los servidores y en otro terminal al ejecutar **_Make run-client_** nos envía bien los tres archivos (file1, file2 y file3) que se especifican en el archivo **Makefile**
@@ -52,8 +63,10 @@ Y por último vemos como nos notifica en el terminal de los servidores
  Si nos vamos a la carpeta **/downloads** veremos que se han obtenido bien los ficheros si estos eran correctos
  
  En caso de que un archivo no exista obtendremos las siguientes excepciones por parte del cliente:
+ 
   ![](memoria/ErrorCliente.png)
   
-  Y en la parte del servidor obtendremos:
+  Y en la parte del servidor obtendremos la linea: "Algun archivo no existe" y la destruccón del transfer
+  
   ![](memoria/ErrorServers.png)
   
