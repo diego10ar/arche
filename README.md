@@ -30,8 +30,18 @@ A la hora de recibir un archivo, mi metodo Start del ReceiverI, llamara la lectu
 
 A pesar de no contar con Canal de Eventos, la práctica se realiza correctamente, si hacemos el comando **_Make_** nos realizara bien el despliegue de los servidores y en otro terminal al ejecutar **_Make run-client_** nos envía bien los tres archivos (file1, file2 y file3) que se especifican en el archivo **Makefile**
 Una vez realizado esto, el cliente se detendra y el servidor avisara de los archivos recibidos y lo utimo sera "**TRANSFER DESTROYED**", Eso si, se mantendrá esperando para nuevas solicitudes.
-En las siguientes fotos se puede ver como se realiza la ejecucin:
+En las siguientes fotos se puede ver como se realiza la ejecución:
 
 Primero arranco los servidores:
 
  ![](memoria/make.png)
+ 
+ 
+Luego ejecutamos el cliente desde el Make
+
+ ![](memoria/run-client.png)
+ 
+ 
+Y por último vemos como nos notifica en el terminal de los servidores
+
+ ![](memoria/make2.png)
