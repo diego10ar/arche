@@ -1,7 +1,8 @@
 # arche_SSDD
-Proyecto de prácticas para la asignatura ssdd realizado individualmente por Diego Arche Claudio
 
--Enlace del proyecto:  https://github.com/diego10ar/arche_SSDD.git
+https://github.com/diego10ar/arche_SSDD.git
+
+Diego Arche Claudio
 
 -En el repositorio hay una memoria en Pdf mas detallada que lo presentado a continuación.
 
