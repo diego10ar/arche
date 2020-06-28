@@ -26,6 +26,8 @@ Primero realice la práctica mas o menos en local, las comunicaciones y creació
 Por tanto mi código ejecuta bien los servidores y los mantiene a la escucha y cuando ejecuto el cliente, si el archivo que solicita el cliente existe, comenzara a realizar la transferencia del archivo que sera introducido en la carpeta /downloads/. Una vez que se realiza la transferencia, se elimina el objeto transfer creado y el servidor se mantiene a la escucha para nuevas solicitudes. Por tanto, la creación de las Factorias y las diferentes clases me lo hace bien, la descarga del archivo y comprobacion de algunos errores también que seran impresos por pantalla.
 A la hora de recibir un archivo, mi metodo Start del ReceiverI, llamara la lectura del sender tantas veces hasta que el tamaño se corresponda a un tamaño igual a 3 que supondra que ha llegado al final del archivo y la cadena esta vacía.
 
+No he implementado los eventos pero los archivos de configuracion para ello si estan creados ya que son similares a los de la sesion3 de Laboratorio.
+
 ## Manual de Usuario:
 
 A pesar de no contar con Canal de Eventos, la práctica se realiza correctamente, si hacemos el comando **_Make_** nos realizara bien el despliegue de los servidores y en otro terminal al ejecutar **_Make run-client_** nos envía bien los tres archivos (file1, file2 y file3) que se especifican en el archivo **Makefile**
@@ -45,3 +47,6 @@ Luego ejecutamos el cliente desde el Make
 Y por último vemos como nos notifica en el terminal de los servidores
 
  ![](memoria/make2.png)
+ 
+ 
+ Si nos vamos a la carpeta **/downloads** veremos que se han obtenido bien los ficheros si estos eran correctos
