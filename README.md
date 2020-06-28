@@ -32,4 +32,5 @@ A pesar de no contar con Canal de Eventos, la práctica se realiza correctamente
 Una vez realizado esto, el cliente se detendra y el servidor avisara de los archivos recibidos y lo utimo sera "**TRANSFER DESTROYED**", Eso si, se mantendrá esperando para nuevas solicitudes.
 En las siguientes fotos se puede ver como se realiza la ejecucin:
 Primero arranco los servidores:
-https://raw.githubusercontent.com/diego10ar/arche_SSDD/master/memoria/make
+
+https://raw.githubusercontent.com/diego10ar/arche_SSDD/master/memoria/make.png
